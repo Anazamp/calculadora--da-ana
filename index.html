@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora da Ana</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f5f1e8;
+  color:#333;
+}
+.container{
+  max-width:600px;
+  margin:auto;
+  padding:20px;
+}
+.header{
+  background:#6b4f2a;
+  color:white;
+  padding:22px;
+  border-radius:18px;
+  text-align:center;
+  margin-bottom:18px;
+}
+.header h1{margin:0 0 6px;font-size:27px}
+.header p{margin:0;font-size:14px}
+.card{
+  background:white;
+  padding:18px;
+  border-radius:16px;
+  margin-bottom:15px;
+  box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+h2{
+  font-size:18px;
+  margin-top:0;
+  color:#6b4f2a;
+}
+label{
+  display:block;
+  font-weight:bold;
+  margin:12px 0 6px;
+}
+input{
+  width:100%;
+  padding:13px;
+  border:1px solid #ccc;
+  border-radius:9px;
+  font-size:16px;
+}
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+button{
+  width:100%;
+  padding:15px;
+  border:0;
+  border-radius:10px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:10px;
+}
+.calcular{
+  background:#6b4f2a;
+  color:white;
+}
+.whatsapp{
+  background:#25D366;
+  color:white;
+}
+.limpar{
+  background:#ddd;
+  color:#333;
+}
+.resultado{
+  background:#faf7ef;
+  padding:15px;
+  border-radius:12px;
+  line-height:1.7;
+}
+.total{
+  font-size:21px;
+  font-weight:bold;
+  color:#6b4f2a;
+}
+.alerta{
+  color:#b00020;
+  font-weight:bold;
+}
+.ok{
+  color:#19733a;
+  font-weight:bold;
+}
+.pequeno{
+  font-size:13px;
+  color:#777;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+  <h1>🏠 Calculadora da Ana</h1>
+  <p>Fluxo de pagamento do imóvel</p>
+</div>
+
+<div class="card">
+<h2>1. Dados do imóvel</h2>
+
+<label>Valor do imóvel</label>
+<input id="imovel" type="number" placeholder="Ex.: 500000" oninput="calcular()">
+
+<label>Ato / Sinal</label>
+<input id="ato" type="number" placeholder="Ex.: 50000" oninput="calcular()">
+</div>
+
+<div class="card">
+<h2>2. Parcelas intermediárias</h2>
+
+<label>30 dias</label>
+<input id="p30" type="number" placeholder="Valor" oninput="calcular()">
+
+<label>60 dias</label>
+<input id="p60" type="number" placeholder="Valor" oninput="calcular()">
+
+<label>90 dias</label>
+<input id="p90" type="number" placeholder="Valor" oninput="calcular()">
+</div>
+
+<div class="card">
+<h2>3. Parcelas mensais</h2>
+
+<div class="row">
+<div>
+<label>Quantidade</label>
+<input id="qtdMensais" type="number" value="43" min="0" oninput="calcular()">
+</div>
+
+<div>
+<label>Valor de cada mensal</label>
+<input id="valorMensal" type="number" placeholder="Valor" oninput="calcular()">
+</div>
+</div>
+
+<p class="pequeno">
+A quantidade de parcelas pode ser alterada manualmente.
+</p>
+</div>
+
+<div class="card">
+<h2>4. Parcelas anuais</h2>
+
+<label>1ª anual</label>
+<input id="anual1" type="number" placeholder="Valor" oninput="calcular()">
+
+<label>2ª anual</label>
+<input id="anual2" type="number" placeholder="Valor" oninput="calcular()">
+</div>
+
+<div class="card">
+<h2>5. Parcela de chaves</h2>
+
+<label>Valor das chaves</label>
+<input id="chaves" type="number" placeholder="Valor" oninput="calcular()">
+</div>
+
+<div class="card">
+<h2>6. Financiamento bancário</h2>
+
+<label>Valor do financiamento</label>
+<input id="financiamento" type="number" placeholder="Ex.: 300000" oninput="calcular()">
+
+<p class="pequeno">
+Informe apenas o valor que será financiado pelo banco.
+</p>
+</div>
+
+<div class="card">
+<h2>Resumo do fluxo</h2>
+
+<div id="resultado" class="resultado">
+Preencha os valores para visualizar o fluxo.
+</div>
+
+<button class="calcular" onclick="calcular()">
+CALCULAR FLUXO
+</button>
+
+<button class="whatsapp" onclick="enviarWhatsApp()">
+📲 ENVIAR FLUXO PELO WHATSAPP
+</button>
+
+<button class="limpar" onclick="limparTudo()">
+LIMPAR
+</button>
+</div>
+
+</div>
+
+<script>
+
+function numero(id){
+  return parseFloat(document.getElementById(id).value) || 0;
+}
+
+function dinheiro(valor){
+  return valor.toLocaleString('pt-BR',{
+    style:'currency',
+    currency
